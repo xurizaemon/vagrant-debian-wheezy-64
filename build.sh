@@ -31,14 +31,14 @@ FOLDER_VBOX="${FOLDER_BUILD}/vbox"
 FOLDER_ISO_CUSTOM="${FOLDER_BUILD}/iso/custom"
 FOLDER_ISO_INITRD="${FOLDER_BUILD}/iso/initrd"
 
-# if [ $OSTYPE = "linux-gnu" ];
-# then
-#   MD5="md5sum"
-#   ISO_GUESTADDITIONS="/usr/share/virtualbox/VBoxGuestAdditions.iso"
-# else
-#   MD5="md5 -q"
-#   ISO_GUESTADDITIONS="/Applications/VirtualBox.app/Contents/MacOS/VBoxGuestAdditions.iso"
-# fi
+if [ $OSTYPE = "linux-gnu" ];
+then
+  MD5="md5sum"
+  ISO_GUESTADDITIONS="/usr/share/virtualbox/VBoxGuestAdditions.iso"
+else
+  MD5="md5 -q"
+  ISO_GUESTADDITIONS="/Applications/VirtualBox.app/Contents/MacOS/VBoxGuestAdditions.iso"
+fi
 
 # start with a clean slate
 if [ -d "${FOLDER_BUILD}" ]; then
@@ -173,7 +173,6 @@ if ! VBoxManage showvminfo "${BOX}" >/dev/null 2>/dev/null; then
     --name "SATA Controller" \
     --add sata \
     --controller IntelAhci \
-    --portcount 1 \
     --hostiocache off
 
   VBoxManage createhd \
